@@ -58,6 +58,8 @@ spec:
           image: devopsbanks/repo18:latest   # ✅ Updated image
           ports:
             - containerPort: 8080
+          imagePullSecrets:
+            - name: dockerhub-secret
           env:
             - name: SPRING_DATASOURCE_URL
               value: jdbc:mysql://mysql-service:3306/bankappdb?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
