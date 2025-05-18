@@ -55,7 +55,7 @@ spec:
     spec:
       containers:
         - name: bankapp
-          image: devopsbanks/bankapp:latest   # ✅ Updated image
+          image: devopsbanks/repo18:latest   # ✅ Updated image
           ports:
             - containerPort: 8080
           env:
