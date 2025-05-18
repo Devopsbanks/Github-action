@@ -59,6 +59,7 @@ jobs:
 
   sonarqube-scan-and-quality-gate:
     runs-on: self-hosted
+    needs: test
     steps:
     - uses: actions/checkout@v4
     - name: Set up JDK 17
@@ -94,6 +95,7 @@ jobs:
 
   docker-build-and-push:
     runs-on: self-hosted
+    needs: sonarqube-scan-and-quality-gate
     steps:
     - uses: actions/checkout@v4
     - name: Download JAR artifact
