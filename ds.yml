@@ -1,4 +1,3 @@
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -13,18 +12,19 @@ spec:
     metadata:
       labels:
         app: mysql
-    spec:
-    containers:
+    spec:                            # ✅ Add this line
+      containers:
         - name: mysql
           image: mysql:8
           env:
             - name: MYSQL_ROOT_PASSWORD
-              value: Test@123
+              value: "Test@123"
             - name: MYSQL_DATABASE
-              value: bankappdb
+              value: "bankappdb"
           ports:
             - containerPort: 3306
               name: mysql
+
 
 ---
 apiVersion: v1
