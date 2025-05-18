@@ -118,7 +118,34 @@ jobs:
         tags: devopsbanks/repo18:latest   # dockerhub repo name is devopsbanks/bankapp
         file: ./Dockerfile
 
-    
+  deploy_to_aks:
+    runs-on: self-hosted
+    needs: docker-build-and-push
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Install Azure CLI
+      run: |
+        curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash   
+    - name: Install kubectl
+      run: >
+        curl -LO "https://dl.k8s.io/release/$(curl -L -s
+        https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+
+        chmod +x kubectl
+
+        sudo mv kubectl /usr/local/bin/
+    - name: Azure Login
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+    - name: Set AKS context
+      run: >
+        az aks get-credentials --resource-group ${{ secrets.AKS_RESOURCE_GROUP }} \
+                               --name ${{ secrets.AKS_CLUSTER_NAME }} \
+                               --overwrite-existing
+    - name: Deploy to AKS
+      run: kubectl apply -f ds.yml      
 
   
 
