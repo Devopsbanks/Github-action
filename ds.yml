@@ -55,11 +55,9 @@ spec:
     spec:
       containers:
         - name: bankapp
-          image: devopsbanks/repo18:latest   # ✅ Updated image
+          image: devopsbanks/repo18:latest
           ports:
             - containerPort: 8080
-          imagePullSecrets:
-            - name: dockerhub-secret
           env:
             - name: SPRING_DATASOURCE_URL
               value: jdbc:mysql://mysql-service:3306/bankappdb?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
@@ -67,6 +65,8 @@ spec:
               value: root
             - name: SPRING_DATASOURCE_PASSWORD
               value: Test@123
+      imagePullSecrets:
+        - name: dockerhub-secret
 ---
 # BankApp Service
 apiVersion: v1
