@@ -1,5 +1,4 @@
 ---
-# MySQL Deployment
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -15,19 +14,19 @@ spec:
       labels:
         app: mysql
     spec:
-      containers:
+    containers:
         - name: mysql
           image: mysql:8
           env:
             - name: MYSQL_ROOT_PASSWORD
-              value: "Test@123"
+              value: Test@123
             - name: MYSQL_DATABASE
-              value: "bankappdb"
+              value: bankappdb
           ports:
             - containerPort: 3306
               name: mysql
+
 ---
-# MySQL Service
 apiVersion: v1
 kind: Service
 metadata:
@@ -37,8 +36,8 @@ spec:
     app: mysql
   ports:
     - port: 3306
+
 ---
-# BankApp Deployment
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -67,8 +66,8 @@ spec:
               value: Test@123
       imagePullSecrets:
         - name: dockerhub-secret
+
 ---
-# BankApp Service
 apiVersion: v1
 kind: Service
 metadata:
