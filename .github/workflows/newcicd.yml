@@ -146,6 +146,15 @@ jobs:
         az aks get-credentials --resource-group ${{ secrets.AKS_RESOURCE_GROUP }} \
                                --name ${{ secrets.AKS_CLUSTER_NAME }} \
                                --overwrite-existing
+
+    - name: Create image pull secret
+      run: |
+        kubectl delete secret dockerhub-secret --ignore-not-found
+        kubectl create secret docker-registry dockerhub-secret \
+          --docker-username=${{ vars.DOCKERHUB_USERNAME }} \
+          --docker-password=${{ secrets.DOCKERHUB_TOKEN }} \
+          --docker-email=desiboys85@gmail.com
+     
     - name: Deploy to AKS
       run: kubectl apply -f ds.yml      
 
